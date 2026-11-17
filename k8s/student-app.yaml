@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: student-profile-system-2026
+  namespace: student-profile-system-2026-gha
+  labels:
+    app: student-profile-system-2026
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: student-profile-system-2026
+  template:
+    metadata:
+      labels:
+        app: student-profile-system-2026
+    spec:
+      containers:
+        - name: student-profile-system-2026
+          image: ghcr.io/syedwahid/student-profile-system-2026:v1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+          env:
+            - { name: DB_HOST, value: "postgres-service" }
+            - { name: DB_PORT, value: "5432" }
+          envFrom:
+            - secretRef: { name: student-db-secret }
+          resources:
+            requests:
+              cpu: "100m"
+            limits:
+              cpu: "200m"
+          readinessProbe:
+            httpGet: { path: /api/students, port: 3000 }
+            initialDelaySeconds: 10
+            periodSeconds: 5
