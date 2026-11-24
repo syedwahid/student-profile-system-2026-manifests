@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: student-profile-system-2026
-          image: ghcr.io/syedwahid/student-profile-system-2026:5
+          image: ghcr.io/syedwahid/student-profile-system-2026:6
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
